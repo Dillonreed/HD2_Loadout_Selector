@@ -136,6 +136,10 @@ hd2LogoTk = ImageTk.PhotoImage(hd2Logo)
 logoLabel = tk.Label(headerFrame, image=hd2LogoTk, bg=backgroundColour)
 logoLabel.grid(row=0, column=1)
 
+# Github link TODO Add hyperlink functionality
+githubLink = "https://github.com/Dillonreed/HD2_Loadout_Selector"
+githubLinkLabel = tk.Label(headerFrame, text=githubLink, bg=backgroundColour)
+githubLinkLabel.grid(row=0, column=3)
 
 # Run the application
 app.mainloop()
