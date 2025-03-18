@@ -1,0 +1,20 @@
+Send "{Down Down}"
+Sleep SleepDelay
+Send "{Down Up}"
+Sleep SleepDelay
+
+Send "{Left Down}"
+Sleep SleepDelay
+Send "{Left Up}"
+Sleep SleepDelay
+
+Send "{Left Down}"
+Sleep SleepDelay
+Send "{Left Up}"
+Sleep SleepDelay
+
+Send "{Down Down}"
+Sleep SleepDelay
+Send "{Down Up}"
+Sleep SleepDelay
+

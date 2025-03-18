@@ -1,0 +1,15 @@
+Send "{Right Down}"
+Sleep SleepDelay
+Send "{Right Up}"
+Sleep SleepDelay
+
+Send "{Right Down}"
+Sleep SleepDelay
+Send "{Right Up}"
+Sleep SleepDelay
+
+Send "{Right Down}"
+Sleep SleepDelay
+Send "{Right Up}"
+Sleep SleepDelay
+
