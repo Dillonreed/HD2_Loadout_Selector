@@ -76,11 +76,11 @@ class Loadout:
 # Create Loadout Object
 loadout = Loadout()
 
-# Setting Default Loadout TODO Add images
-stratagem1 = Stratagem("500Kg Bomb", "Stratagem List/Eagles/500_Bomb.txt")
-stratagem2 = Stratagem("Anti-Tank Mines", "Stratagem List/Emplacements/Anti-Tank_Mines.txt")
-stratagem3 = Stratagem("Stalwart", "Stratagem List/Support Weapons/Stalwart.txt")
-stratagem4 = Stratagem("Gas Guard Dog", "Stratagem List/Backpacks/Gas_Guard_Dog.txt")
+# Setting Default Loadout
+stratagem1 = Stratagem("500Kg Bomb", "Stratagem List/Eagles/500_Bomb.txt", "Assets/Eagles/500_Bomb.png")
+stratagem2 = Stratagem("Anti-Tank Mines", "Stratagem List/Emplacements/Anti-Tank_Mines.txt", "Assets/Emplacements/Anti-Tank_Mines.png")
+stratagem3 = Stratagem("Stalwart", "Stratagem List/Support Weapons/Stalwart.txt", "Assets/Support Weapons/Stalwart.png")
+stratagem4 = Stratagem("Gas Guard Dog", "Stratagem List/Backpacks/Gas_Guard_Dog.txt", "Assets/Backpacks/Gas_Guard_Dog.png")
 
 # Create tkinter object
 app = tk.Tk()
@@ -125,9 +125,11 @@ footerFrame.pack()
 titleLabel = tk.Label(headerFrame, text="HD2 Loadout Selector", font=("Arial", 20), bg=backgroundColour)
 titleLabel.grid(row=0, column=0)
 
+# TODO Add instruction label
+
 # HD2 Logo
 # Load & configure the image
-hd2Logo = Image.open("Assets/HD2Logo.png")
+hd2Logo = Image.open("Assets/HD2LogoSmaller.png")
 hd2Logo.resize((5, 5))
 # Convert image to be usable by tkinter
 hd2LogoTk = ImageTk.PhotoImage(hd2Logo)
@@ -140,6 +142,109 @@ logoLabel.grid(row=0, column=1)
 githubLink = "https://github.com/Dillonreed/HD2_Loadout_Selector"
 githubLinkLabel = tk.Label(headerFrame, text=githubLink, bg=backgroundColour)
 githubLinkLabel.grid(row=0, column=3)
+
+# -------------------------------------------------------------------------------------
+# Body
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+# Stratagem 1
+# -------------------------------------------------------------------------------------
+# Stratagem 1 title
+stratagem1TitleLabel = tk.Label(stratagem1Frame, text="Stratagem 1", font=("Arial", 15), bg=backgroundColour)
+stratagem1TitleLabel.grid(row=0, column=0)
+
+# Stratagem 1 image (500Kg by default)
+# Load image
+stratagem1Image = Image.open(stratagem1.getImagePath())
+# Convert image to be usable by tkinter
+stratagem1ImageTk = ImageTk.PhotoImage(stratagem1Image)
+
+# Create button with image on it TODO Add functions to buttons
+stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, bg=backgroundColour)
+stratagem1Button.grid(row=1, column=0)
+
+# Create label with stratagem name
+stratagem1Label = tk.Label(master=stratagem1Frame, text=stratagem1.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem1Label.grid(row=2, column=0)
+
+# Create label with which key this stratagem is binded to
+stratagem1KeybindLabel = tk.Label(master=stratagem1Frame, text="Bound to : Numpad 4", font=("Arial", 11), bg=backgroundColour)
+stratagem1KeybindLabel.grid(row=3, column=0)
+
+# -------------------------------------------------------------------------------------
+# Stratagem 2
+# -------------------------------------------------------------------------------------
+# Stratagem 2 title
+stratagem2TitleLabel = tk.Label(stratagem2Frame, text="Stratagem 2", font=("Arial", 15), bg=backgroundColour)
+stratagem2TitleLabel.grid(row=0, column=0)
+
+# Stratagem 2 image (Anti-Tank mines by default)
+# Load image
+stratagem2Image = Image.open(stratagem2.getImagePath())
+# Convert image to be usable by tkinter
+stratagem2ImageTk = ImageTk.PhotoImage(stratagem2Image)
+
+# Create button with image on it TODO Add functions to buttons
+stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, bg=backgroundColour)
+stratagem2Button.grid(row=1, column=0)
+
+# Create label with stratagem name
+stratagem2Label = tk.Label(master=stratagem2Frame, text=stratagem2.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem2Label.grid(row=2, column=0)
+
+# Create label with which key this stratagem is binded to
+stratagem2KeybindLabel = tk.Label(master=stratagem2Frame, text="Bound to : Numpad 6", font=("Arial", 11), bg=backgroundColour)
+stratagem2KeybindLabel.grid(row=3, column=0)
+
+# -------------------------------------------------------------------------------------
+# Stratagem 3
+# -------------------------------------------------------------------------------------
+# Stratagem 3 title
+stratagem3TitleLabel = tk.Label(stratagem3Frame, text="Stratagem 3", font=("Arial", 15), bg=backgroundColour)
+stratagem3TitleLabel.grid(row=0, column=0)
+
+# Stratagem 3 image (Stalwart by default)
+# Load image
+stratagem3Image = Image.open(stratagem3.getImagePath())
+# Convert image to be usable by tkinter
+stratagem3ImageTk = ImageTk.PhotoImage(stratagem3Image)
+
+# Create button with image on it TODO Add functions to buttons
+stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, bg=backgroundColour)
+stratagem3Button.grid(row=1, column=0)
+
+# Create label with stratagem name
+stratagem3Label = tk.Label(master=stratagem3Frame, text=stratagem3.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem3Label.grid(row=2, column=0)
+
+# Create label with which key this stratagem is binded to
+stratagem3KeybindLabel = tk.Label(master=stratagem3Frame, text="Bound to : Numpad 7", font=("Arial", 11), bg=backgroundColour)
+stratagem3KeybindLabel.grid(row=3, column=0)
+
+# -------------------------------------------------------------------------------------
+# Stratagem 4
+# -------------------------------------------------------------------------------------
+# Stratagem 4 title
+stratagem4TitleLabel = tk.Label(stratagem4Frame, text="Stratagem 4", font=("Arial", 15), bg=backgroundColour)
+stratagem4TitleLabel.grid(row=0, column=0)
+
+# Stratagem 4 image (Gas Guard Dog by default)
+# Load image
+stratagem4Image = Image.open(stratagem4.getImagePath())
+# Convert image to be usable by tkinter
+stratagem4ImageTk = ImageTk.PhotoImage(stratagem4Image)
+
+# Create button with image on it TODO Add functions to buttons
+stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, bg=backgroundColour)
+stratagem4Button.grid(row=1, column=0)
+
+# Create label with stratagem name
+stratagem4Label = tk.Label(master=stratagem4Frame, text=stratagem4.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem4Label.grid(row=2, column=0)
+
+# Create label with which key this stratagem is binded to
+stratagem4KeybindLabel = tk.Label(master=stratagem4Frame, text="Bound to : Numpad 9", font=("Arial", 11), bg=backgroundColour)
+stratagem4KeybindLabel.grid(row=3, column=0)
 
 # Run the application
 app.mainloop()
