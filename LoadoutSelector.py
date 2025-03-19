@@ -116,6 +116,9 @@ stratagem4Frame.grid(row=0, column=3)
 # Footer
 footerFrame= tk.Frame(master=app, bg=backgroundColour)
 footerFrame.pack()
+# Mission Stratagems
+missionStratagemFrame = tk.Frame(master=footerFrame, bg=backgroundColour)
+missionStratagemFrame.grid(row=0, column=0)
 
 # Adding Content
 # ------------------------------------------------------------------------------------
@@ -167,7 +170,7 @@ stratagem1Button.grid(row=1, column=0)
 stratagem1Label = tk.Label(master=stratagem1Frame, text=stratagem1.getName(), font=("Arial", 11), bg=backgroundColour)
 stratagem1Label.grid(row=2, column=0)
 
-# Create label with which key this stratagem is binded to
+# Create label with which key this stratagem is bound to
 stratagem1KeybindLabel = tk.Label(master=stratagem1Frame, text="Bound to : Numpad 4", font=("Arial", 11), bg=backgroundColour)
 stratagem1KeybindLabel.grid(row=3, column=0)
 
@@ -192,7 +195,7 @@ stratagem2Button.grid(row=1, column=0)
 stratagem2Label = tk.Label(master=stratagem2Frame, text=stratagem2.getName(), font=("Arial", 11), bg=backgroundColour)
 stratagem2Label.grid(row=2, column=0)
 
-# Create label with which key this stratagem is binded to
+# Create label with which key this stratagem is bound to
 stratagem2KeybindLabel = tk.Label(master=stratagem2Frame, text="Bound to : Numpad 6", font=("Arial", 11), bg=backgroundColour)
 stratagem2KeybindLabel.grid(row=3, column=0)
 
@@ -217,7 +220,7 @@ stratagem3Button.grid(row=1, column=0)
 stratagem3Label = tk.Label(master=stratagem3Frame, text=stratagem3.getName(), font=("Arial", 11), bg=backgroundColour)
 stratagem3Label.grid(row=2, column=0)
 
-# Create label with which key this stratagem is binded to
+# Create label with which key this stratagem is bound to
 stratagem3KeybindLabel = tk.Label(master=stratagem3Frame, text="Bound to : Numpad 7", font=("Arial", 11), bg=backgroundColour)
 stratagem3KeybindLabel.grid(row=3, column=0)
 
@@ -242,9 +245,63 @@ stratagem4Button.grid(row=1, column=0)
 stratagem4Label = tk.Label(master=stratagem4Frame, text=stratagem4.getName(), font=("Arial", 11), bg=backgroundColour)
 stratagem4Label.grid(row=2, column=0)
 
-# Create label with which key this stratagem is binded to
+# Create label with which key this stratagem is bound to
 stratagem4KeybindLabel = tk.Label(master=stratagem4Frame, text="Bound to : Numpad 9", font=("Arial", 11), bg=backgroundColour)
 stratagem4KeybindLabel.grid(row=3, column=0)
+
+# -------------------------------------------------------------------------------------
+# Footer
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+# Mission Stratagems
+# -------------------------------------------------------------------------------------
+# Reinforce
+# Load the image
+reinforceImage = Image.open("Assets/Mission Stratagems/Smaller Versions/Reinforce.png")
+# Convert image to be usable by tkinter
+reinforceImageTk = ImageTk.PhotoImage(reinforceImage)
+# Create reinforce image label
+reinforceImageLabel = tk.Label(master=missionStratagemFrame, image=reinforceImageTk, bg=backgroundColour)
+reinforceImageLabel.grid(row=0, column=0)
+# Create reinforce text label to show which key this stratagem is bound to
+reinforceLabel = tk.Label(master=missionStratagemFrame, text="Reinforce : Numpad 1", font=("Arial", 11), bg=backgroundColour)
+reinforceLabel.grid(row=0, column=1)
+
+# Resupply
+# Load the image
+resupplyImage = Image.open("Assets/Mission Stratagems/Smaller Versions/Resupply.png")
+# Convert image to be usable by tkinter
+resupplyImageTk = ImageTk.PhotoImage(resupplyImage)
+# Create resupply reinforce image label
+resupplyImageLabel = tk.Label(master=missionStratagemFrame, image=resupplyImageTk, bg=backgroundColour)
+resupplyImageLabel.grid(row=1, column=0)
+# Create resupply text label to show which key this stratagem is bound to
+resupplyLabel = tk.Label(master=missionStratagemFrame, text="Resupply : Numpad 2", font=("Arial", 11), bg=backgroundColour)
+resupplyLabel.grid(row=1, column=1)
+
+# Eagle Resupply
+# Load the image
+eagleResupplyImage = Image.open("Assets/Mission Stratagems/Smaller Versions/Eagle_Resupply.png")
+# Convert image to be usable by tkinter
+eagleResupplyImageTk = ImageTk.PhotoImage(eagleResupplyImage)
+# Create eagle resupply image label
+eagleResupplyImageLabel = tk.Label(master=missionStratagemFrame, image=eagleResupplyImageTk, bg=backgroundColour)
+eagleResupplyImageLabel.grid(row=2, column=0)
+# Create eagle resupply text label to show which key this stratagem is bound to
+eagleResupplyLabel = tk.Label(master=missionStratagemFrame, text="Eagle Resupply : Numpad 3", font=("Arial", 11), bg=backgroundColour)
+eagleResupplyLabel.grid(row=2, column=1)
+
+# Hellbomb
+# Load the image
+hellbombImage = Image.open("Assets/Mission Stratagems/Smaller Versions/Hellbomb.png")
+# Convert image to be usable by tkinter
+hellbombImageTk = ImageTk.PhotoImage(hellbombImage)
+# Create hellbomb image label
+hellbombImageLabel = tk.Label(master=missionStratagemFrame, image=hellbombImageTk, bg=backgroundColour)
+hellbombImageLabel.grid(row=3, column=0)
+# Create hellbomb text label to show which key this stratagem is bound to
+hellbombLabel = tk.Label(master=missionStratagemFrame, text="Hellbomb : Numpad 8", font=("Arial", 11), bg=backgroundColour)
+hellbombLabel.grid(row=3, column=1)
 
 # Run the application
 app.mainloop()
