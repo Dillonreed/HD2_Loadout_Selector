@@ -87,6 +87,10 @@ app = tk.Tk()
 
 # Global Attributes
 backgroundColour = "grey"
+textFont = "Arial"
+h1Size = 20
+h2Size = 15
+h3Size = 11
 
 # Tkinter window attributes
 app.title("HD2 Loadout Selector")
@@ -94,38 +98,53 @@ app.configure(bg="grey")
 
 # Layout configuration
 # Header
-headerFrame = tk.Frame(master=app, bg=backgroundColour)
-headerFrame.pack()
+headerFrame = tk.Frame(master=app, relief="groove", bd=5, bg=backgroundColour)
+headerFrame.pack(fill="both")
 
 # Body
 bodyFrame = tk.Frame(master=app, bg=backgroundColour)
 bodyFrame.pack()
 # Stratagem 1
-stratagem1Frame = tk.Frame(master=bodyFrame, bg=backgroundColour)
+stratagem1Frame = tk.Frame(master=bodyFrame, relief="groove", bd=5, bg=backgroundColour)
 stratagem1Frame.grid(row=0, column=0)
 # Stratagem 2
-stratagem2Frame = tk.Frame(master=bodyFrame, bg=backgroundColour)
+stratagem2Frame = tk.Frame(master=bodyFrame, relief="groove", bd=5, bg=backgroundColour)
 stratagem2Frame.grid(row=0, column=1)
 # Stratagem 3
-stratagem3Frame = tk.Frame(master=bodyFrame, bg=backgroundColour)
+stratagem3Frame = tk.Frame(master=bodyFrame, relief="groove", bd=5, bg=backgroundColour)
 stratagem3Frame.grid(row=0, column=2)
 # Stratagem 4
-stratagem4Frame = tk.Frame(master=bodyFrame, bg=backgroundColour)
+stratagem4Frame = tk.Frame(master=bodyFrame, relief="groove", bd=5, bg=backgroundColour)
 stratagem4Frame.grid(row=0, column=3)
 
 # Footer
-footerFrame= tk.Frame(master=app, bg=backgroundColour)
-footerFrame.pack()
+footerFrame= tk.Frame(master=app, relief="groove", bd=5, bg=backgroundColour)
+# Make the grid fill the whole space available
+footerFrame.grid_rowconfigure(0, weight=1)
+footerFrame.grid_columnconfigure(0, weight=1)
+footerFrame.grid_columnconfigure(1, weight=1)
+footerFrame.grid_columnconfigure(2, weight=1)
+footerFrame.grid_columnconfigure(3, weight=1)
+footerFrame.pack(fill="both")
 # Mission Stratagems
 missionStratagemFrame = tk.Frame(master=footerFrame, bg=backgroundColour)
-missionStratagemFrame.grid(row=0, column=0)
+missionStratagemFrame.grid(row=0, column=0, sticky="nsew")
+# Save Button
+saveButtonFrame = tk.Frame(master=footerFrame, bg=backgroundColour)
+saveButtonFrame.grid(row=0, column=1, sticky="nsew")
+# Run Button
+runButtonFrame = tk.Frame(master=footerFrame, bg=backgroundColour)
+runButtonFrame.grid(row=0, column=2, sticky="nsew")
+# Stop Button
+stopButtonFrame = tk.Frame(master=footerFrame, bg=backgroundColour)
+stopButtonFrame.grid(row=0, column=3, sticky="nsew")
 
 # Adding Content
 # ------------------------------------------------------------------------------------
 # Header Section
 # ------------------------------------------------------------------------------------
 # Title
-titleLabel = tk.Label(headerFrame, text="HD2 Loadout Selector", font=("Arial", 20), bg=backgroundColour)
+titleLabel = tk.Label(headerFrame, text="HD2 Loadout Selector", font=(textFont, h1Size), bg=backgroundColour)
 titleLabel.grid(row=0, column=0)
 
 # TODO Add instruction label
@@ -153,7 +172,7 @@ githubLinkLabel.grid(row=0, column=3)
 # Stratagem 1
 # -------------------------------------------------------------------------------------
 # Stratagem 1 title
-stratagem1TitleLabel = tk.Label(stratagem1Frame, text="Stratagem 1", font=("Arial", 15), bg=backgroundColour)
+stratagem1TitleLabel = tk.Label(stratagem1Frame, text="Stratagem 1", font=(textFont, h2Size), bg=backgroundColour)
 stratagem1TitleLabel.grid(row=0, column=0)
 
 # Stratagem 1 image (500Kg by default)
@@ -167,18 +186,18 @@ stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, bg
 stratagem1Button.grid(row=1, column=0)
 
 # Create label with stratagem name
-stratagem1Label = tk.Label(master=stratagem1Frame, text=stratagem1.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem1Label = tk.Label(master=stratagem1Frame, text=stratagem1.getName(), font=(textFont, h3Size), bg=backgroundColour)
 stratagem1Label.grid(row=2, column=0)
 
 # Create label with which key this stratagem is bound to
-stratagem1KeybindLabel = tk.Label(master=stratagem1Frame, text="Bound to : Numpad 4", font=("Arial", 11), bg=backgroundColour)
+stratagem1KeybindLabel = tk.Label(master=stratagem1Frame, text="Bound to : Numpad 4", font=(textFont, h3Size), bg=backgroundColour)
 stratagem1KeybindLabel.grid(row=3, column=0)
 
 # -------------------------------------------------------------------------------------
 # Stratagem 2
 # -------------------------------------------------------------------------------------
 # Stratagem 2 title
-stratagem2TitleLabel = tk.Label(stratagem2Frame, text="Stratagem 2", font=("Arial", 15), bg=backgroundColour)
+stratagem2TitleLabel = tk.Label(stratagem2Frame, text="Stratagem 2", font=(textFont, h2Size), bg=backgroundColour)
 stratagem2TitleLabel.grid(row=0, column=0)
 
 # Stratagem 2 image (Anti-Tank mines by default)
@@ -192,18 +211,18 @@ stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, bg
 stratagem2Button.grid(row=1, column=0)
 
 # Create label with stratagem name
-stratagem2Label = tk.Label(master=stratagem2Frame, text=stratagem2.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem2Label = tk.Label(master=stratagem2Frame, text=stratagem2.getName(), font=(textFont, h3Size), bg=backgroundColour)
 stratagem2Label.grid(row=2, column=0)
 
 # Create label with which key this stratagem is bound to
-stratagem2KeybindLabel = tk.Label(master=stratagem2Frame, text="Bound to : Numpad 6", font=("Arial", 11), bg=backgroundColour)
+stratagem2KeybindLabel = tk.Label(master=stratagem2Frame, text="Bound to : Numpad 6", font=(textFont, h3Size), bg=backgroundColour)
 stratagem2KeybindLabel.grid(row=3, column=0)
 
 # -------------------------------------------------------------------------------------
 # Stratagem 3
 # -------------------------------------------------------------------------------------
 # Stratagem 3 title
-stratagem3TitleLabel = tk.Label(stratagem3Frame, text="Stratagem 3", font=("Arial", 15), bg=backgroundColour)
+stratagem3TitleLabel = tk.Label(stratagem3Frame, text="Stratagem 3", font=(textFont, h2Size), bg=backgroundColour)
 stratagem3TitleLabel.grid(row=0, column=0)
 
 # Stratagem 3 image (Stalwart by default)
@@ -217,18 +236,18 @@ stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, bg
 stratagem3Button.grid(row=1, column=0)
 
 # Create label with stratagem name
-stratagem3Label = tk.Label(master=stratagem3Frame, text=stratagem3.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem3Label = tk.Label(master=stratagem3Frame, text=stratagem3.getName(), font=(textFont, h3Size), bg=backgroundColour)
 stratagem3Label.grid(row=2, column=0)
 
 # Create label with which key this stratagem is bound to
-stratagem3KeybindLabel = tk.Label(master=stratagem3Frame, text="Bound to : Numpad 7", font=("Arial", 11), bg=backgroundColour)
+stratagem3KeybindLabel = tk.Label(master=stratagem3Frame, text="Bound to : Numpad 7", font=(textFont, h3Size), bg=backgroundColour)
 stratagem3KeybindLabel.grid(row=3, column=0)
 
 # -------------------------------------------------------------------------------------
 # Stratagem 4
 # -------------------------------------------------------------------------------------
 # Stratagem 4 title
-stratagem4TitleLabel = tk.Label(stratagem4Frame, text="Stratagem 4", font=("Arial", 15), bg=backgroundColour)
+stratagem4TitleLabel = tk.Label(stratagem4Frame, text="Stratagem 4", font=(textFont, h2Size), bg=backgroundColour)
 stratagem4TitleLabel.grid(row=0, column=0)
 
 # Stratagem 4 image (Gas Guard Dog by default)
@@ -242,11 +261,11 @@ stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, bg
 stratagem4Button.grid(row=1, column=0)
 
 # Create label with stratagem name
-stratagem4Label = tk.Label(master=stratagem4Frame, text=stratagem4.getName(), font=("Arial", 11), bg=backgroundColour)
+stratagem4Label = tk.Label(master=stratagem4Frame, text=stratagem4.getName(), font=(textFont, h3Size), bg=backgroundColour)
 stratagem4Label.grid(row=2, column=0)
 
 # Create label with which key this stratagem is bound to
-stratagem4KeybindLabel = tk.Label(master=stratagem4Frame, text="Bound to : Numpad 9", font=("Arial", 11), bg=backgroundColour)
+stratagem4KeybindLabel = tk.Label(master=stratagem4Frame, text="Bound to : Numpad 9", font=(textFont, h3Size), bg=backgroundColour)
 stratagem4KeybindLabel.grid(row=3, column=0)
 
 # -------------------------------------------------------------------------------------
@@ -264,7 +283,7 @@ reinforceImageTk = ImageTk.PhotoImage(reinforceImage)
 reinforceImageLabel = tk.Label(master=missionStratagemFrame, image=reinforceImageTk, bg=backgroundColour)
 reinforceImageLabel.grid(row=0, column=0)
 # Create reinforce text label to show which key this stratagem is bound to
-reinforceLabel = tk.Label(master=missionStratagemFrame, text="Reinforce : Numpad 1", font=("Arial", 11), bg=backgroundColour)
+reinforceLabel = tk.Label(master=missionStratagemFrame, text="Reinforce : Numpad 1", font=(textFont, h3Size), bg=backgroundColour)
 reinforceLabel.grid(row=0, column=1)
 
 # Resupply
@@ -276,7 +295,7 @@ resupplyImageTk = ImageTk.PhotoImage(resupplyImage)
 resupplyImageLabel = tk.Label(master=missionStratagemFrame, image=resupplyImageTk, bg=backgroundColour)
 resupplyImageLabel.grid(row=1, column=0)
 # Create resupply text label to show which key this stratagem is bound to
-resupplyLabel = tk.Label(master=missionStratagemFrame, text="Resupply : Numpad 2", font=("Arial", 11), bg=backgroundColour)
+resupplyLabel = tk.Label(master=missionStratagemFrame, text="Resupply : Numpad 2", font=(textFont, h3Size), bg=backgroundColour)
 resupplyLabel.grid(row=1, column=1)
 
 # Eagle Resupply
@@ -288,7 +307,7 @@ eagleResupplyImageTk = ImageTk.PhotoImage(eagleResupplyImage)
 eagleResupplyImageLabel = tk.Label(master=missionStratagemFrame, image=eagleResupplyImageTk, bg=backgroundColour)
 eagleResupplyImageLabel.grid(row=2, column=0)
 # Create eagle resupply text label to show which key this stratagem is bound to
-eagleResupplyLabel = tk.Label(master=missionStratagemFrame, text="Eagle Resupply : Numpad 3", font=("Arial", 11), bg=backgroundColour)
+eagleResupplyLabel = tk.Label(master=missionStratagemFrame, text="Eagle Resupply : Numpad 3", font=(textFont, h3Size), bg=backgroundColour)
 eagleResupplyLabel.grid(row=2, column=1)
 
 # Hellbomb
@@ -300,8 +319,29 @@ hellbombImageTk = ImageTk.PhotoImage(hellbombImage)
 hellbombImageLabel = tk.Label(master=missionStratagemFrame, image=hellbombImageTk, bg=backgroundColour)
 hellbombImageLabel.grid(row=3, column=0)
 # Create hellbomb text label to show which key this stratagem is bound to
-hellbombLabel = tk.Label(master=missionStratagemFrame, text="Hellbomb : Numpad 8", font=("Arial", 11), bg=backgroundColour)
+hellbombLabel = tk.Label(master=missionStratagemFrame, text="Hellbomb : Numpad 8", font=(textFont, h3Size), bg=backgroundColour)
 hellbombLabel.grid(row=3, column=1)
+
+# -------------------------------------------------------------------------------------
+# Save Button
+# -------------------------------------------------------------------------------------
+# Create save button TODO Add functions to buttons
+saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size))
+saveButton.pack(fill="both", expand=True)
+
+# -------------------------------------------------------------------------------------
+# Run Button
+# -------------------------------------------------------------------------------------
+# Create run button TODO Add functions to buttons
+runButton = tk.Button(master=runButtonFrame, text="Run", font=(textFont, h2Size))
+runButton.pack(fill="both", expand=True)
+
+# -------------------------------------------------------------------------------------
+# Stop Button
+# -------------------------------------------------------------------------------------
+# Create run button TODO Add functions to buttons
+stopButton = tk.Button(master=stopButtonFrame, text="Stop", font=(textFont, h2Size))
+stopButton.pack(fill="both", expand=True)
 
 # Run the application
 app.mainloop()
