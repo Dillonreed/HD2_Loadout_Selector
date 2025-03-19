@@ -94,7 +94,7 @@ h3Size = 11
 
 # Tkinter window attributes
 app.title("HD2 Loadout Selector")
-app.configure(bg="grey")
+app.configure(bg=backgroundColour)
 
 # Layout configuration
 # Header
@@ -168,6 +168,100 @@ githubLinkLabel.grid(row=0, column=3)
 # -------------------------------------------------------------------------------------
 # Body
 # -------------------------------------------------------------------------------------
+
+# Function to open stratagem category selector
+def openStratagemCategorySelector(stratagemSlot):
+    # Create tkinter object
+    categorySelector = tk.Toplevel()
+
+    # Tkinter window attributes
+    categorySelector.title("Stratagem Category Selector")
+    categorySelector.configure(bg=backgroundColour)
+
+    # cS = category selector
+
+    # Layout configuration
+    # Header
+    cSHeaderFrame = tk.Frame(master=categorySelector, relief="groove", bd=5, bg=backgroundColour)
+    cSHeaderFrame.pack(fill="both")
+
+    # Body
+    cSBodyFrame = tk.Frame(master=categorySelector, relief="groove", bd=5, bg=backgroundColour)
+    cSBodyFrame.pack(fill="both")
+
+    # Adding content
+    # ---------------------------------------------------------------------------------
+    # Header
+    # ---------------------------------------------------------------------------------
+
+    cSTitleLabel = tk.Label(master=cSHeaderFrame, text="Stratagem Category Selector", font=(textFont, h1Size), bg=backgroundColour)
+    cSTitleLabel.grid(row=0, column=0)
+
+    # ---------------------------------------------------------------------------------
+    # Body TODO Add functions to buttons
+    # ---------------------------------------------------------------------------------
+    # Orbitals
+    # Load image
+    orbitalsImage = Image.open("Assets/Orbitals/Precision_Strike.png")
+    # Convert the image to be usable by tkinter
+    orbitalsImageTk = ImageTk.PhotoImage(orbitalsImage)
+    # Create orbitals Button
+    orbitalsButton = tk.Button(master=cSBodyFrame, text="Orbitals", font=(textFont, h2Size), image=orbitalsImageTk, compound="left", bg=backgroundColour)
+    orbitalsButton.pack(fill="both")
+
+    # Eagles
+    # Load image
+    eaglesImage = Image.open("Assets/Eagles/500_Bomb.png")
+    # Convert the image to be usable by tkinter
+    eaglesImageTk = ImageTk.PhotoImage(eaglesImage)
+    # Create eagles Button
+    eaglesButton = tk.Button(master=cSBodyFrame, text="Eagles", font=(textFont, h2Size), image=eaglesImageTk,
+                               compound="left", bg=backgroundColour)
+    eaglesButton.pack(fill="both")
+
+    # Support Weapons
+    # Load image
+    supportWeaponsImage = Image.open("Assets/Support Weapons/Railgun.png")
+    # Convert the image to be usable by tkinter
+    supportWeaponsImageTk = ImageTk.PhotoImage(supportWeaponsImage)
+    # Create support weapons Button
+    supportWeaponsButton = tk.Button(master=cSBodyFrame, text="Support Weapons", font=(textFont, h2Size), image=supportWeaponsImageTk,
+                             compound="left", bg=backgroundColour)
+    supportWeaponsButton.pack(fill="both")
+
+    # Backpacks
+    # Load image
+    backpacksImage = Image.open("Assets/Backpacks/Jump_Pack.png")
+    # Convert the image to be usable by tkinter
+    backpacksImageTk = ImageTk.PhotoImage(backpacksImage)
+    # Create backpacks Button
+    backpacksButton = tk.Button(master=cSBodyFrame, text="Backpacks", font=(textFont, h2Size), image=backpacksImageTk,
+                             compound="left", bg=backgroundColour)
+    backpacksButton.pack(fill="both")
+
+    # Emplacements
+    # Load image
+    emplacementsImage = Image.open("Assets/Emplacements/Gatling_Sentry.png")
+    # Convert the image to be usable by tkinter
+    emplacementsImageTk = ImageTk.PhotoImage(emplacementsImage)
+    # Create Orbitals Button
+    emplacementsButton = tk.Button(master=cSBodyFrame, text="Emplacements", font=(textFont, h2Size), image=emplacementsImageTk,
+                             compound="left", bg=backgroundColour)
+    emplacementsButton.pack(fill="both")
+
+    # Vehicles
+    # Load image
+    vehiclesImage = Image.open("Assets/Vehicles/Fast_Recon_Vehicles.png")
+    # Convert the image to be usable by tkinter
+    vehiclesImageTk = ImageTk.PhotoImage(vehiclesImage)
+    # Create Orbitals Button
+    vehiclesButton = tk.Button(master=cSBodyFrame, text="Vehicles", font=(textFont, h2Size), image=vehiclesImageTk,
+                             compound="left", bg=backgroundColour)
+    vehiclesButton.pack(fill="both")
+
+    # Run the application
+    categorySelector.mainloop()
+
 # -------------------------------------------------------------------------------------
 # Stratagem 1
 # -------------------------------------------------------------------------------------
@@ -181,8 +275,8 @@ stratagem1Image = Image.open(stratagem1.getImagePath())
 # Convert image to be usable by tkinter
 stratagem1ImageTk = ImageTk.PhotoImage(stratagem1Image)
 
-# Create button with image on it TODO Add functions to buttons
-stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, bg=backgroundColour)
+# Create button with image on it
+stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, command= lambda: openStratagemCategorySelector("1"), bg=backgroundColour)
 stratagem1Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -206,8 +300,8 @@ stratagem2Image = Image.open(stratagem2.getImagePath())
 # Convert image to be usable by tkinter
 stratagem2ImageTk = ImageTk.PhotoImage(stratagem2Image)
 
-# Create button with image on it TODO Add functions to buttons
-stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, bg=backgroundColour)
+# Create button with image on it
+stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, command= lambda: openStratagemCategorySelector("2"), bg=backgroundColour)
 stratagem2Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -231,8 +325,8 @@ stratagem3Image = Image.open(stratagem3.getImagePath())
 # Convert image to be usable by tkinter
 stratagem3ImageTk = ImageTk.PhotoImage(stratagem3Image)
 
-# Create button with image on it TODO Add functions to buttons
-stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, bg=backgroundColour)
+# Create button with image on it
+stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, command= lambda: openStratagemCategorySelector("3"), bg=backgroundColour)
 stratagem3Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -256,8 +350,8 @@ stratagem4Image = Image.open(stratagem4.getImagePath())
 # Convert image to be usable by tkinter
 stratagem4ImageTk = ImageTk.PhotoImage(stratagem4Image)
 
-# Create button with image on it TODO Add functions to buttons
-stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, bg=backgroundColour)
+# Create button with image on it
+stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, command= lambda: openStratagemCategorySelector("4"), bg=backgroundColour)
 stratagem4Button.grid(row=1, column=0)
 
 # Create label with stratagem name
