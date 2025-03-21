@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import csv
 
 # Used to create a AutoHotKey script for selected stratagems for Helldivers 2
 
@@ -24,6 +25,9 @@ class Stratagem:
 
     def getImagePath(self):
         return self.imagePath
+
+    def setImagePath(self, imagePath):
+        self.imagePath = imagePath
 
     def __str__(self):
         return f"""
@@ -81,6 +85,8 @@ stratagem1 = Stratagem("500Kg Bomb", "Stratagem List/Eagles/500_Bomb.txt", "Asse
 stratagem2 = Stratagem("Anti-Tank Mines", "Stratagem List/Emplacements/Anti-Tank_Mines.txt", "Assets/Emplacements/Anti-Tank_Mines.png")
 stratagem3 = Stratagem("Stalwart", "Stratagem List/Support Weapons/Stalwart.txt", "Assets/Support Weapons/Stalwart.png")
 stratagem4 = Stratagem("Gas Guard Dog", "Stratagem List/Backpacks/Gas_Guard_Dog.txt", "Assets/Backpacks/Gas_Guard_Dog.png")
+
+stratagemsList = [stratagem1, stratagem2, stratagem3, stratagem4]
 
 # Create tkinter object
 app = tk.Tk()
@@ -190,15 +196,100 @@ def openStratagemCategorySelector(stratagemSlot):
     cSBodyFrame.pack(fill="both")
 
     # Adding content
+    # Function to open stratagem selector
+    def openStratagemSelector(category):
+        # Create tkinter object
+        stratagemSelector = tk.Toplevel()
+
+        # Tkinter window attributes
+        stratagemSelector.title("Stratagem Selector")
+        stratagemSelector.configure(bg=backgroundColour)
+
+        # sS = Stratagem Selector
+
+        # Layout configuration
+        # Header
+        sSHeaderFrame = tk.Frame(master=stratagemSelector, relief="groove", bd=5, bg=backgroundColour)
+        sSHeaderFrame.pack(fill="both")
+
+        # Body
+        sSBodyFrame = tk.Frame(master=stratagemSelector, relief="groove", bd=5, bg=backgroundColour)
+        sSBodyFrame.pack(fill="both")
+
+        # Adding content
+
+        # Function to update the main window
+        def updateSelectedStratagem(name, keyCombinationPath, imagePath):
+            # Update stratagem object with new selected stratagem information
+            stratagemsList[stratagemSlot-1].setName(name)
+            stratagemsList[stratagemSlot-1].setKeyCombinationPath(keyCombinationPath)
+            stratagemsList[stratagemSlot-1].setImagePath(imagePath)
+
+            # Update main window
+            # Load image
+            newStratagemImage = Image.open(imagePath)
+            # Convert image to be usable by tkinter
+            newStratagemImageTk = ImageTk.PhotoImage(newStratagemImage)
+
+            # Create lists of tkinter widgets to use to update the specific slot that was selected
+            stratagemSlotButtonsList = [stratagem1Button, stratagem2Button, stratagem3Button, stratagem4Button]
+            stratagemSlotLabelsList = [stratagem1Label, stratagem2Label, stratagem3Label, stratagem4Label]
+
+            # Update image for stratagem slot button
+            stratagemSlotButtonsList[stratagemSlot-1].configure(image=newStratagemImageTk)
+            # Added a variable to ensure that each iteration's image is not garbage collected
+            stratagemSlotButtonsList[stratagemSlot-1].photo = newStratagemImageTk
+
+            # Update label for stratagem slot
+            stratagemSlotLabelsList[stratagemSlot-1].configure(text=name)
+
+            # Destroy category selector and stratagem selector windows
+            categorySelector.destroy()
+            stratagemSelector.destroy()
+
+        # -----------------------------------------------------------------------------
+        # Header
+        # -----------------------------------------------------------------------------
+        # Add a title to the page
+        sSTitleLabel = tk.Label(master=sSHeaderFrame, text="Stratagem Selector", font=(textFont, h1Size), bg=backgroundColour)
+        sSTitleLabel.grid(row=0, column=0)
+
+        # -----------------------------------------------------------------------------
+        # Body TODO Make body frame scrollable
+        # -----------------------------------------------------------------------------
+        # Create stratagem list
+        with open(f"Stratagems/{category}StratagemList.csv", mode="r") as stratagemList:
+            stratagemListCSV = csv.reader(stratagemList)
+            for stratagem in stratagemListCSV:
+                # Ignore the top line of the csv
+                if stratagem[0] == "name":
+                    pass
+                else:
+                    # stratagem[0] = name
+                    # stratagem[2] = imagePath
+
+                    # Load image
+                    stratagemImage = Image.open(stratagem[2])
+                    # Convert image to be usable by tkinter
+                    stratagemImageTk = ImageTk.PhotoImage(stratagemImage)
+                    # Create button
+                    stratagemButton = tk.Button(master=sSBodyFrame, text=stratagem[0], font=(textFont, h2Size), image=stratagemImageTk, compound="left", command=lambda chosenStratagem=stratagem: updateSelectedStratagem(chosenStratagem[0], chosenStratagem[1], chosenStratagem[2]), bg=backgroundColour)
+                    # Added a variable to ensure that each iteration's image is not garbage collected
+                    stratagemButton.photo = stratagemImageTk
+                    stratagemButton.pack(fill="both")
+
+        # Run the application
+        stratagemSelector.mainloop()
+
     # ---------------------------------------------------------------------------------
     # Header
     # ---------------------------------------------------------------------------------
-
+    # Add a title to the page
     cSTitleLabel = tk.Label(master=cSHeaderFrame, text="Stratagem Category Selector", font=(textFont, h1Size), bg=backgroundColour)
     cSTitleLabel.grid(row=0, column=0)
 
     # ---------------------------------------------------------------------------------
-    # Body TODO Add functions to buttons
+    # Body
     # ---------------------------------------------------------------------------------
     # Orbitals
     # Load image
@@ -206,7 +297,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     orbitalsImageTk = ImageTk.PhotoImage(orbitalsImage)
     # Create orbitals Button
-    orbitalsButton = tk.Button(master=cSBodyFrame, text="Orbitals", font=(textFont, h2Size), image=orbitalsImageTk, compound="left", bg=backgroundColour)
+    orbitalsButton = tk.Button(master=cSBodyFrame, text="Orbitals", font=(textFont, h2Size), image=orbitalsImageTk, compound="left", command=lambda: openStratagemSelector("Orbitals"), bg=backgroundColour)
     orbitalsButton.pack(fill="both")
 
     # Eagles
@@ -215,8 +306,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     eaglesImageTk = ImageTk.PhotoImage(eaglesImage)
     # Create eagles Button
-    eaglesButton = tk.Button(master=cSBodyFrame, text="Eagles", font=(textFont, h2Size), image=eaglesImageTk,
-                               compound="left", bg=backgroundColour)
+    eaglesButton = tk.Button(master=cSBodyFrame, text="Eagles", font=(textFont, h2Size), image=eaglesImageTk, compound="left", command=lambda: openStratagemSelector("Eagles"), bg=backgroundColour)
     eaglesButton.pack(fill="both")
 
     # Support Weapons
@@ -225,8 +315,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     supportWeaponsImageTk = ImageTk.PhotoImage(supportWeaponsImage)
     # Create support weapons Button
-    supportWeaponsButton = tk.Button(master=cSBodyFrame, text="Support Weapons", font=(textFont, h2Size), image=supportWeaponsImageTk,
-                             compound="left", bg=backgroundColour)
+    supportWeaponsButton = tk.Button(master=cSBodyFrame, text="Support Weapons", font=(textFont, h2Size), image=supportWeaponsImageTk, compound="left", command=lambda: openStratagemSelector("SupportWeapons"), bg=backgroundColour)
     supportWeaponsButton.pack(fill="both")
 
     # Backpacks
@@ -235,8 +324,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     backpacksImageTk = ImageTk.PhotoImage(backpacksImage)
     # Create backpacks Button
-    backpacksButton = tk.Button(master=cSBodyFrame, text="Backpacks", font=(textFont, h2Size), image=backpacksImageTk,
-                             compound="left", bg=backgroundColour)
+    backpacksButton = tk.Button(master=cSBodyFrame, text="Backpacks", font=(textFont, h2Size), image=backpacksImageTk, compound="left", command=lambda: openStratagemSelector("Backpacks"), bg=backgroundColour)
     backpacksButton.pack(fill="both")
 
     # Emplacements
@@ -245,8 +333,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     emplacementsImageTk = ImageTk.PhotoImage(emplacementsImage)
     # Create Orbitals Button
-    emplacementsButton = tk.Button(master=cSBodyFrame, text="Emplacements", font=(textFont, h2Size), image=emplacementsImageTk,
-                             compound="left", bg=backgroundColour)
+    emplacementsButton = tk.Button(master=cSBodyFrame, text="Emplacements", font=(textFont, h2Size), image=emplacementsImageTk, compound="left", command=lambda: openStratagemSelector("Emplacements"), bg=backgroundColour)
     emplacementsButton.pack(fill="both")
 
     # Vehicles
@@ -255,8 +342,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     vehiclesImageTk = ImageTk.PhotoImage(vehiclesImage)
     # Create Orbitals Button
-    vehiclesButton = tk.Button(master=cSBodyFrame, text="Vehicles", font=(textFont, h2Size), image=vehiclesImageTk,
-                             compound="left", bg=backgroundColour)
+    vehiclesButton = tk.Button(master=cSBodyFrame, text="Vehicles", font=(textFont, h2Size), image=vehiclesImageTk, compound="left", command=lambda: openStratagemSelector("Vehicles"), bg=backgroundColour)
     vehiclesButton.pack(fill="both")
 
     # Run the application
@@ -276,7 +362,7 @@ stratagem1Image = Image.open(stratagem1.getImagePath())
 stratagem1ImageTk = ImageTk.PhotoImage(stratagem1Image)
 
 # Create button with image on it
-stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, command= lambda: openStratagemCategorySelector("1"), bg=backgroundColour)
+stratagem1Button = tk.Button(master=stratagem1Frame, image=stratagem1ImageTk, command= lambda: openStratagemCategorySelector(1), bg=backgroundColour)
 stratagem1Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -301,7 +387,7 @@ stratagem2Image = Image.open(stratagem2.getImagePath())
 stratagem2ImageTk = ImageTk.PhotoImage(stratagem2Image)
 
 # Create button with image on it
-stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, command= lambda: openStratagemCategorySelector("2"), bg=backgroundColour)
+stratagem2Button = tk.Button(master=stratagem2Frame, image=stratagem2ImageTk, command= lambda: openStratagemCategorySelector(2), bg=backgroundColour)
 stratagem2Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -326,7 +412,7 @@ stratagem3Image = Image.open(stratagem3.getImagePath())
 stratagem3ImageTk = ImageTk.PhotoImage(stratagem3Image)
 
 # Create button with image on it
-stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, command= lambda: openStratagemCategorySelector("3"), bg=backgroundColour)
+stratagem3Button = tk.Button(master=stratagem3Frame, image=stratagem3ImageTk, command= lambda: openStratagemCategorySelector(3), bg=backgroundColour)
 stratagem3Button.grid(row=1, column=0)
 
 # Create label with stratagem name
@@ -351,7 +437,7 @@ stratagem4Image = Image.open(stratagem4.getImagePath())
 stratagem4ImageTk = ImageTk.PhotoImage(stratagem4Image)
 
 # Create button with image on it
-stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, command= lambda: openStratagemCategorySelector("4"), bg=backgroundColour)
+stratagem4Button = tk.Button(master=stratagem4Frame, image=stratagem4ImageTk, command= lambda: openStratagemCategorySelector(4), bg=backgroundColour)
 stratagem4Button.grid(row=1, column=0)
 
 # Create label with stratagem name
