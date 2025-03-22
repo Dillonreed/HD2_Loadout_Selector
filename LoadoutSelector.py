@@ -276,7 +276,12 @@ def openStratagemCategorySelector(stratagemSlot):
 
             # Destroy category selector and stratagem selector windows
             categorySelector.destroy()
-            stratagemSelector.destroy()
+
+            def onClose():
+                # Unbinds the mousewheel watcher to ensure erroneous errors are not thrown once the window has been destroyed
+                stratagemSelector.unbind_all("<MouseWheel>")
+                stratagemSelector.destroy()
+            onClose()
 
         # -----------------------------------------------------------------------------
         # Header
