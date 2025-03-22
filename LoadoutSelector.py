@@ -1,3 +1,4 @@
+import os
 import subprocess
 import tkinter as tk
 from tkinter import messagebox
@@ -99,6 +100,7 @@ textFont = "Arial"
 h1Size = 20
 h2Size = 15
 h3Size = 11
+macroProcess = None
 
 # Tkinter window attributes
 app.title("HD2 Loadout Selector")
@@ -565,7 +567,7 @@ def showImageBox(message):
 # Save Button
 # -------------------------------------------------------------------------------------
 # Create function to save the macro
-def saveMacro():
+def saveMacro(saveFirst):
     # Get the key combinations for the stratagems
     stratagem1KeyCombination = ""
     stratagem2KeyCombination = ""
@@ -608,11 +610,12 @@ def saveMacro():
     with open("MacroFile.ahk", "w") as macroFile:
         macroFile.write(template)
 
-    # Show message box to advise the user that the file was saved
-    showImageBox("File Saved")
+    if saveFirst:
+        # Show message box to advise the user that the file was saved
+        showImageBox("File Saved")
 
 # Create save button
-saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size), command=saveMacro)
+saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size), command=lambda: saveMacro(True))
 saveButton.pack(fill="both", expand=True)
 
 # -------------------------------------------------------------------------------------
@@ -620,12 +623,13 @@ saveButton.pack(fill="both", expand=True)
 # -------------------------------------------------------------------------------------
 # Create function to run the macro
 def runMacro():
-    # Save the current selected stratagems
-    saveMacro()
-    # Show message box to advise the user that the macro was run
-    showImageBox("File ran")
+    # Save the selected stratagems first
+    saveMacro(False)
     # Run the macro file
-    subprocess.run([".\MacroFile.ahk"])
+    global macroProcess
+    macroProcess = subprocess.Popen(["MacroFile.ahk"], shell=True)
+    # Show message box to advise the user that the macro was run
+    showImageBox("Macro ran")
 # Create run button
 runButton = tk.Button(master=runButtonFrame, text="Run", font=(textFont, h2Size), command=runMacro)
 runButton.pack(fill="both", expand=True)
@@ -633,8 +637,19 @@ runButton.pack(fill="both", expand=True)
 # -------------------------------------------------------------------------------------
 # Stop Button
 # -------------------------------------------------------------------------------------
-# Create run button TODO Add functions to buttons
-stopButton = tk.Button(master=stopButtonFrame, text="Stop", font=(textFont, h2Size))
+# Create function to stop the macro
+def stopMacro():
+    # Stop the macro
+    global macroProcess
+    if macroProcess:
+        macroProcess.terminate()
+        macroProcess = None
+    subprocess.run(["taskkill", "/IM", "AutoHotkey64.exe", "/F"], shell=True)
+    # Show message box to advise the user that the macro was stopped
+    showImageBox("Macro Stopped")
+
+# Create run button
+stopButton = tk.Button(master=stopButtonFrame, text="Stop", font=(textFont, h2Size), command=stopMacro)
 stopButton.pack(fill="both", expand=True)
 
 # Run the application
