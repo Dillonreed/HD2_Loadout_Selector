@@ -1,4 +1,6 @@
+import subprocess
 import tkinter as tk
+from tkinter import messagebox
 from PIL import Image, ImageTk
 import csv
 
@@ -539,6 +541,27 @@ hellbombLabel = tk.Label(master=missionStratagemFrame, text="Hellbomb : Numpad 8
 hellbombLabel.grid(row=3, column=1)
 
 # -------------------------------------------------------------------------------------
+# Information box
+# -------------------------------------------------------------------------------------
+def showImageBox(message):
+    # Message box to advise the user
+    informationBox = tk.Toplevel()
+
+    # Tkinter window attributes
+    informationBox.title("Information")
+    informationBox.configure(bg=backgroundColour)
+
+    # Create label to show information
+    informationBoxLabel = tk.Label(master=informationBox, text=message, font=(textFont, h3Size))
+    informationBoxLabel.pack(fill="both")
+
+    # Automatically destroy the window after a time period
+    informationBox.after(1000, lambda: informationBox.destroy())
+
+    # Run the application
+    informationBox.mainloop()
+
+# -------------------------------------------------------------------------------------
 # Save Button
 # -------------------------------------------------------------------------------------
 # Create function to save the macro
@@ -585,6 +608,9 @@ def saveMacro():
     with open("MacroFile.ahk", "w") as macroFile:
         macroFile.write(template)
 
+    # Show message box to advise the user that the file was saved
+    showImageBox("File Saved")
+
 # Create save button
 saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size), command=saveMacro)
 saveButton.pack(fill="both", expand=True)
@@ -592,8 +618,16 @@ saveButton.pack(fill="both", expand=True)
 # -------------------------------------------------------------------------------------
 # Run Button
 # -------------------------------------------------------------------------------------
-# Create run button TODO Add functions to buttons
-runButton = tk.Button(master=runButtonFrame, text="Run", font=(textFont, h2Size))
+# Create function to run the macro
+def runMacro():
+    # Save the current selected stratagems
+    saveMacro()
+    # Show message box to advise the user that the macro was run
+    showImageBox("File ran")
+    # Run the macro file
+    subprocess.run([".\MacroFile.ahk"])
+# Create run button
+runButton = tk.Button(master=runButtonFrame, text="Run", font=(textFont, h2Size), command=runMacro)
 runButton.pack(fill="both", expand=True)
 
 # -------------------------------------------------------------------------------------
