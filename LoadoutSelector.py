@@ -291,7 +291,7 @@ def openStratagemCategorySelector(stratagemSlot):
         sSTitleLabel.grid(row=0, column=0)
 
         # -----------------------------------------------------------------------------
-        # Body TODO Make body frame scrollable
+        # Body
         # -----------------------------------------------------------------------------
         # Create stratagem list
         with open(f"Stratagems/{category}StratagemList.csv", mode="r") as stratagemList:
@@ -541,8 +541,52 @@ hellbombLabel.grid(row=3, column=1)
 # -------------------------------------------------------------------------------------
 # Save Button
 # -------------------------------------------------------------------------------------
-# Create save button TODO Add functions to buttons
-saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size))
+# Create function to save the macro
+def saveMacro():
+    # Get the key combinations for the stratagems
+    stratagem1KeyCombination = ""
+    stratagem2KeyCombination = ""
+    stratagem3KeyCombination = ""
+    stratagem4KeyCombination = ""
+
+    with open(stratagem1.getKeyCombinationPath(), mode="r") as keyCombinationFile:
+        for line in keyCombinationFile:
+            stratagem1KeyCombination += line
+
+    with open(stratagem2.getKeyCombinationPath(), mode="r") as keyCombinationFile:
+        for line in keyCombinationFile:
+            stratagem2KeyCombination += line
+
+    with open(stratagem3.getKeyCombinationPath(), mode="r") as keyCombinationFile:
+        for line in keyCombinationFile:
+            stratagem3KeyCombination += line
+
+    with open(stratagem4.getKeyCombinationPath(), mode="r") as keyCombinationFile:
+        for line in keyCombinationFile:
+            stratagem4KeyCombination += line
+
+    # Write file
+    # Read in template
+    with open("TemplateMacro.ahk", "r") as templateFile:
+        template = templateFile.read()
+
+    # Replace placeholder strings
+    template = template.replace("; %1StratagemName", f"; {stratagem1.getName()}")
+    template = template.replace("; %2StratagemName", f"; {stratagem2.getName()}")
+    template = template.replace("; %3StratagemName", f"; {stratagem3.getName()}")
+    template = template.replace("; %4StratagemName", f"; {stratagem4.getName()}")
+
+    template = template.replace("%1KeyCombination", f"{stratagem1KeyCombination}")
+    template = template.replace("%2KeyCombination", f"{stratagem2KeyCombination}")
+    template = template.replace("%3KeyCombination", f"{stratagem3KeyCombination}")
+    template = template.replace("%4KeyCombination", f"{stratagem4KeyCombination}")
+
+    # Write new macro file
+    with open("MacroFile.ahk", "w") as macroFile:
+        macroFile.write(template)
+
+# Create save button
+saveButton = tk.Button(master=saveButtonFrame, text="Save", font=(textFont, h2Size), command=saveMacro)
 saveButton.pack(fill="both", expand=True)
 
 # -------------------------------------------------------------------------------------
