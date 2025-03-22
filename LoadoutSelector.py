@@ -204,6 +204,7 @@ def openStratagemCategorySelector(stratagemSlot):
         # Tkinter window attributes
         stratagemSelector.title("Stratagem Selector")
         stratagemSelector.configure(bg=backgroundColour)
+        stratagemSelector.minsize(400, 400)
 
         # sS = Stratagem Selector
 
@@ -212,9 +213,39 @@ def openStratagemCategorySelector(stratagemSlot):
         sSHeaderFrame = tk.Frame(master=stratagemSelector, relief="groove", bd=5, bg=backgroundColour)
         sSHeaderFrame.pack(fill="both")
 
+        # Making body frame scrollable
+        # Making outer frame to hold the canvas, body frame and scrollbar
+        outerFrame = tk.Frame(master=stratagemSelector)
+        outerFrame.pack(fill="both", expand=True)
+        # Creating the canvas
+        canvas = tk.Canvas(master=outerFrame)
+        canvas.pack(side="left", fill="both", expand=True)
+        # Creating the scrollbar
+        scrollbar = tk.Scrollbar(master=outerFrame, orient="vertical", command=canvas.yview, width=70)
+        scrollbar.pack(side="right", fill="y")
+        # Configuring the canvas
+        canvas.configure(yscrollcommand=scrollbar.set)
+
         # Body
-        sSBodyFrame = tk.Frame(master=stratagemSelector, relief="groove", bd=5, bg=backgroundColour)
-        sSBodyFrame.pack(fill="both")
+        sSBodyFrame = tk.Frame(master=canvas, width=10, height=10, bg=backgroundColour)
+        sSBodyFrame.pack(fill="both", expand=True)
+
+        # Create the canvas
+        def update_canvas(event):
+            # Update the scroll region
+            canvas.configure(scrollregion=canvas.bbox("all"))
+            # Resize the embedded frame
+            canvas.itemconfig(canvas_window, width=event.width)
+
+        def _on_mouse_wheel(event):
+            canvas.yview_scroll(-1 * (event.delta // 120), "units")
+
+        canvas_window = canvas.create_window((0, 0), window=sSBodyFrame, anchor="nw")
+
+        # When the canvas is scrolled/resized, update it
+        canvas.bind("<Configure>", update_canvas)
+        # Bind the mouse wheel to scrolling
+        stratagemSelector.bind_all("<MouseWheel>", _on_mouse_wheel)
 
         # Adding content
 
@@ -273,10 +304,10 @@ def openStratagemCategorySelector(stratagemSlot):
                     # Convert image to be usable by tkinter
                     stratagemImageTk = ImageTk.PhotoImage(stratagemImage)
                     # Create button
-                    stratagemButton = tk.Button(master=sSBodyFrame, text=stratagem[0], font=(textFont, h2Size), image=stratagemImageTk, compound="left", command=lambda chosenStratagem=stratagem: updateSelectedStratagem(chosenStratagem[0], chosenStratagem[1], chosenStratagem[2]), bg=backgroundColour)
+                    stratagemButton = tk.Button(master=sSBodyFrame, text=stratagem[0], font=(textFont, h2Size), image=stratagemImageTk, compound="left", anchor="w", command=lambda chosenStratagem=stratagem: updateSelectedStratagem(chosenStratagem[0], chosenStratagem[1], chosenStratagem[2]), bg=backgroundColour)
                     # Added a variable to ensure that each iteration's image is not garbage collected
                     stratagemButton.photo = stratagemImageTk
-                    stratagemButton.pack(fill="both")
+                    stratagemButton.pack(fill="x", expand=True)
 
         # Run the application
         stratagemSelector.mainloop()
@@ -297,7 +328,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     orbitalsImageTk = ImageTk.PhotoImage(orbitalsImage)
     # Create orbitals Button
-    orbitalsButton = tk.Button(master=cSBodyFrame, text="Orbitals", font=(textFont, h2Size), image=orbitalsImageTk, compound="left", command=lambda: openStratagemSelector("Orbitals"), bg=backgroundColour)
+    orbitalsButton = tk.Button(master=cSBodyFrame, text="Orbitals", font=(textFont, h2Size), image=orbitalsImageTk, compound="left", anchor="w", command=lambda: openStratagemSelector("Orbitals"), bg=backgroundColour)
     orbitalsButton.pack(fill="both")
 
     # Eagles
@@ -306,7 +337,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     eaglesImageTk = ImageTk.PhotoImage(eaglesImage)
     # Create eagles Button
-    eaglesButton = tk.Button(master=cSBodyFrame, text="Eagles", font=(textFont, h2Size), image=eaglesImageTk, compound="left", command=lambda: openStratagemSelector("Eagles"), bg=backgroundColour)
+    eaglesButton = tk.Button(master=cSBodyFrame, text="Eagles", font=(textFont, h2Size), image=eaglesImageTk, compound="left", anchor="w", command=lambda: openStratagemSelector("Eagles"), bg=backgroundColour)
     eaglesButton.pack(fill="both")
 
     # Support Weapons
@@ -315,7 +346,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     supportWeaponsImageTk = ImageTk.PhotoImage(supportWeaponsImage)
     # Create support weapons Button
-    supportWeaponsButton = tk.Button(master=cSBodyFrame, text="Support Weapons", font=(textFont, h2Size), image=supportWeaponsImageTk, compound="left", command=lambda: openStratagemSelector("SupportWeapons"), bg=backgroundColour)
+    supportWeaponsButton = tk.Button(master=cSBodyFrame, text="Support Weapons", font=(textFont, h2Size), image=supportWeaponsImageTk, anchor="w", compound="left", command=lambda: openStratagemSelector("SupportWeapons"), bg=backgroundColour)
     supportWeaponsButton.pack(fill="both")
 
     # Backpacks
@@ -324,7 +355,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     backpacksImageTk = ImageTk.PhotoImage(backpacksImage)
     # Create backpacks Button
-    backpacksButton = tk.Button(master=cSBodyFrame, text="Backpacks", font=(textFont, h2Size), image=backpacksImageTk, compound="left", command=lambda: openStratagemSelector("Backpacks"), bg=backgroundColour)
+    backpacksButton = tk.Button(master=cSBodyFrame, text="Backpacks", font=(textFont, h2Size), image=backpacksImageTk, compound="left", anchor="w", command=lambda: openStratagemSelector("Backpacks"), bg=backgroundColour)
     backpacksButton.pack(fill="both")
 
     # Emplacements
@@ -333,7 +364,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     emplacementsImageTk = ImageTk.PhotoImage(emplacementsImage)
     # Create Orbitals Button
-    emplacementsButton = tk.Button(master=cSBodyFrame, text="Emplacements", font=(textFont, h2Size), image=emplacementsImageTk, compound="left", command=lambda: openStratagemSelector("Emplacements"), bg=backgroundColour)
+    emplacementsButton = tk.Button(master=cSBodyFrame, text="Emplacements", font=(textFont, h2Size), image=emplacementsImageTk, compound="left", anchor="w", command=lambda: openStratagemSelector("Emplacements"), bg=backgroundColour)
     emplacementsButton.pack(fill="both")
 
     # Vehicles
@@ -342,7 +373,7 @@ def openStratagemCategorySelector(stratagemSlot):
     # Convert the image to be usable by tkinter
     vehiclesImageTk = ImageTk.PhotoImage(vehiclesImage)
     # Create Orbitals Button
-    vehiclesButton = tk.Button(master=cSBodyFrame, text="Vehicles", font=(textFont, h2Size), image=vehiclesImageTk, compound="left", command=lambda: openStratagemSelector("Vehicles"), bg=backgroundColour)
+    vehiclesButton = tk.Button(master=cSBodyFrame, text="Vehicles", font=(textFont, h2Size), image=vehiclesImageTk, compound="left", anchor="w", command=lambda: openStratagemSelector("Vehicles"), bg=backgroundColour)
     vehiclesButton.pack(fill="both")
 
     # Run the application
